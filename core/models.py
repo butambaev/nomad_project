@@ -8,6 +8,7 @@ class Faculty(models.Model):
     def __str__(self):
         return self.name
 
+
 class Teacher(models.Model):
     name = models.CharField(max_length=200)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='teachers')
@@ -16,6 +17,7 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class News(models.Model):
     title = models.CharField(max_length=200)
@@ -26,6 +28,7 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
+
 class Minor(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
@@ -34,6 +37,7 @@ class Minor(models.Model):
     def __str__(self):
         return self.name
 
+
 class Review(models.Model):
     student_name = models.CharField(max_length=100)
     content = models.TextField()
@@ -41,3 +45,37 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{self.student_name} - {self.faculty.name}'
+    
+
+class Category(models.Model):
+    title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+
+class SubCategory(models.Model):
+    title = models.CharField(max_length=200)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
+
+    def __str__(self):
+        return self.title
+    
+
+class Slider(models.Model):
+    title = models.CharField(max_length=200)
+    subtitle = models.TextField(blank=True)
+    image = models.ImageField(upload_to='sliders/')
+    order = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+class FacultyCard(models.Model):
+    name = models.CharField(max_length=100)
+    icon_image = models.ImageField(upload_to='faculty_icons/')
+    description = models.TextField(blank=True)
+    link = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.name
