@@ -57,3 +57,11 @@ class FacultyCardSerializer(serializers.ModelSerializer):
         model = FacultyCard
         fields = '__all__'
 
+
+from .models import ContactMessage
+
+class ContactMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactMessage
+        fields = '__all__'
+

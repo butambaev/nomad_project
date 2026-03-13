@@ -6,7 +6,10 @@ from .models import Category, SubCategory
 from .serializers import CategorySerializer, SubCategorySerializer
 from .models import Slider, FacultyCard
 from .serializers import SliderSerializer, FacultyCardSerializer
-
+import requests
+from rest_framework import viewsets
+from .models import ContactMessage
+from .serializers import ContactMessageSerializer
 
 class FacultyViewSet(viewsets.ModelViewSet):
     queryset = Faculty.objects.all()
@@ -50,3 +53,30 @@ class SliderViewSet(viewsets.ModelViewSet):
 class FacultyCardViewSet(viewsets.ModelViewSet):
     queryset = FacultyCard.objects.all()
     serializer_class = FacultyCardSerializer
+
+
+class ContactMessageViewSet(viewsets.ModelViewSet):
+    queryset = ContactMessage.objects.all()
+    serializer_class = ContactMessageSerializer
+
+    def perform_create(self, serializer):
+        message = serializer.save()
+
+        BOT_TOKEN = "8677452477:AAGBnT3i3q0nxYA9ERweqMfrPtwrgoGz5xY"
+        CHAT_ID = "-1003817608226"
+
+        text = f"""
+Новая заявка с сайта:
+
+Имя: {message.name}
+Телефон: {message.phone}
+Вопрос: {message.question}
+Telegram: {message.telegram}
+"""
+
+        url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+
+        requests.post(url, data={
+            "chat_id": CHAT_ID,
+            "text": text
+        })

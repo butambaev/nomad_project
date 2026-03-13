@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from .views import FacultyViewSet, TeacherViewSet, NewsViewSet, MinorViewSet, ReviewViewSet
+from .views import FacultyViewSet, TeacherViewSet, NewsViewSet, MinorViewSet, ReviewViewSet, ContactMessageViewSet
 from .views import CategoryViewSet, SubCategoryViewSet
 from .views import SliderViewSet, FacultyCardViewSet
 
@@ -13,4 +13,5 @@ router.register('categories', CategoryViewSet)
 router.register('subcategories', SubCategoryViewSet)
 router.register('sliders', SliderViewSet)
 router.register('faculty-cards', FacultyCardViewSet)
+router.register('contacts', ContactMessageViewSet)
 urlpatterns = router.urls
